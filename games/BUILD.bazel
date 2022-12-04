@@ -1,0 +1,31 @@
+cc_library(
+    name = "game_2048",
+    hdrs = [
+        "game_2048/game_state.hpp",
+    ],
+    srcs = [
+        "game_2048/game_state.cpp",
+    ],
+)
+
+cc_test(
+    name = "game_2048_test",
+    size = "small",
+    srcs = [
+        "game_2048/game_state.test.cpp",
+    ],
+    deps = [
+        ":game_2048",
+        "@com_google_googletest//:gtest_main"
+    ],
+)
+
+cc_binary(
+    name = "games_run",
+    srcs = [
+        "main.cpp"
+    ],
+    deps = [
+        ":game_2048",
+    ],
+)
