@@ -6,6 +6,7 @@ cc_library(
     srcs = [
         "game_2048/game_state.cpp",
     ],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(

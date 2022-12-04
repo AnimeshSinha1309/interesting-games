@@ -1,0 +1,8 @@
+py_test(
+  name = "test_env",
+  srcs = ["test_env.py"],
+  deps = ["@//bindings:apy"],
+  python_version = "PY3",
+  legacy_create_init = False,
+  timeout = "short",
+)

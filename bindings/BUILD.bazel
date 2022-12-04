@@ -1,0 +1,21 @@
+load("@pybind11_bazel//:build_defs.bzl", "pybind_extension")
+
+cc_binary(
+  name = "game_2048.so",
+  srcs = ["game_2048.cpp"],
+  copts = ["-Iexternal/pybind"],
+  linkshared = 1,
+  linkstatic = 1,
+  deps = [
+    "@pybind11//:pybind11_embed",
+    "@//environments:game_2048"
+  ],
+  visibility = ["//visibility:public"],
+)
+
+py_library(
+  name = "apy",
+  data=[':game_2048.so'],
+  imports=['.'],
+  visibility = ["//visibility:public"],
+)
