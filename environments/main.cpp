@@ -5,14 +5,13 @@
 
 
 int main() {
-    GameState game(4);
-    game.set_board({
-                           { 0,  0,  0,  0},
-                           { 0, 32, 16,  0},
-                           { 0, 64,  8,  0},
-                           { 0,  0,  0,  0},
-                   });
-    game.move(GameState::Move::UP);
+    GameState2048<4> game({
+        { 0,  0,  0,  0},
+        { 0, 32, 16,  0},
+        { 0, 64,  8,  0},
+        { 0,  0,  0,  0},
+    });
+    game.move(GameState2048<4>::Move::UP);
     std::vector<std::vector<int>> expected_state = {
             { 0, 32, 16,  0},
             { 0, 64,  8,  0},

@@ -1,7 +1,7 @@
 py_test(
   name = "test_env",
   srcs = ["test_env.py"],
-  deps = ["@//bindings:apy"],
+  deps = ["@//bindings:game_2048.bindings"],
   python_version = "PY3",
   legacy_create_init = False,
   timeout = "short",

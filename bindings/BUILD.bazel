@@ -14,7 +14,7 @@ cc_binary(
 )
 
 py_library(
-  name = "apy",
+  name = "game_2048.bindings",
   data=[':game_2048.so'],
   imports=['.'],
   visibility = ["//visibility:public"],
