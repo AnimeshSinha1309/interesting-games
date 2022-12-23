@@ -3,9 +3,9 @@
 #include "game_state.hpp"
 
 
-class TestBasicMovementActions : public ::testing::TestWithParam<GameState2048<4>::Move> {
+class TestBasicMovementActions : public ::testing::TestWithParam<Action2048> {
 protected:
-    GameState2048<4>::Move move;
+    Action2048 move{Action2048::ActionType::UP};
 };
 
 TEST_P(TestBasicMovementActions, TestBasicMoveUp) {
@@ -15,14 +15,14 @@ TEST_P(TestBasicMovementActions, TestBasicMoveUp) {
             { 0, 64,  8,  0},
             { 0,  0,  0,  0},
     });
-    decltype(game)::Move move = GetParam();
+    Action2048 move = GetParam();
 
-    game.move(move);
-    std::vector<std::vector<int>> obtained_state = game.get_board();
+    game.step(move);
+    std::vector<std::vector<int>> obtained_state = game.get_state();
 
     std::vector<std::vector<int>> expected_state;
-    switch (move) {
-        case decltype(move)::UP:
+    switch (move.action) {
+        case Action2048::ActionType::UP:
             expected_state = {
                     { 0, 32, 16,  0},
                     { 0, 64,  8,  0},
@@ -30,7 +30,7 @@ TEST_P(TestBasicMovementActions, TestBasicMoveUp) {
                     { 0,  0,  0,  0},
             };
             break;
-        case decltype(move)::DOWN:
+        case Action2048::ActionType::DOWN:
             expected_state = {
                     { 0,  0,  0,  0},
                     { 0,  0,  0,  0},
@@ -38,7 +38,7 @@ TEST_P(TestBasicMovementActions, TestBasicMoveUp) {
                     { 0, 64,  8,  0},
             };
             break;
-        case decltype(move)::LEFT:
+        case Action2048::ActionType::LEFT:
             expected_state = {
                     { 0,  0,  0,  0},
                     {32, 16,  0,  0},
@@ -46,7 +46,7 @@ TEST_P(TestBasicMovementActions, TestBasicMoveUp) {
                     { 0,  0,  0,  0},
             };
             break;
-        case decltype(move)::RIGHT:
+        case Action2048::ActionType::RIGHT:
             expected_state = {
                     { 0,  0,  0,  0},
                     { 0,  0, 32, 16},
@@ -75,10 +75,10 @@ INSTANTIATE_TEST_SUITE_P(
         TestBasicMovements,
         TestBasicMovementActions,
         ::testing::Values(
-                GameState2048<4>::Move::UP,
-                GameState2048<4>::Move::DOWN,
-                GameState2048<4>::Move::LEFT,
-                GameState2048<4>::Move::RIGHT
+                Action2048(Action2048::ActionType::UP),
+                Action2048(Action2048::ActionType::DOWN),
+                Action2048(Action2048::ActionType::LEFT),
+                Action2048(Action2048::ActionType::RIGHT)
                 ));
 
 
@@ -89,8 +89,9 @@ TEST(TestMovementAndMerges, TestMoveUp) {
             {16,  0, 64,  0},
             {16, 32, 64,  0},
     });
-    game.move(decltype(game)::Move::DOWN);
-    std::vector<std::vector<int>> obtained_state = game.get_board();
+    int score = game.step(Action2048(Action2048::ActionType::DOWN));
+    EXPECT_EQ(score, (16 + 16 + 32 + 64) * 2);
+    std::vector<std::vector<int>> obtained_state = game.get_state();
 
     std::vector<std::vector<int>> expected_state = {
             { 0,  0,   0,  0},

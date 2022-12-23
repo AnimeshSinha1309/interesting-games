@@ -5,6 +5,10 @@ cc_library(
     ],
     srcs = [
         "game_2048/game_state.cpp",
+        "meta/games.hpp"
+    ],
+    deps = [
+        "@fmt",
     ],
     visibility = ["//visibility:public"],
 )
