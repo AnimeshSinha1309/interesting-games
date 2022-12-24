@@ -1,20 +1,28 @@
 cc_library(
+    name = "environments",
+    hdrs = [
+        "meta/games.hpp",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
     name = "game_2048",
     hdrs = [
         "game_2048/game_state.hpp",
     ],
     srcs = [
         "game_2048/game_state.cpp",
-        "meta/games.hpp"
     ],
     deps = [
+        ":environments",
         "@fmt",
     ],
     visibility = ["//visibility:public"],
 )
 
 cc_test(
-    name = "game_2048_test",
+    name = "test_game_2048",
     size = "small",
     srcs = [
         "game_2048/game_state.test.cpp",
@@ -22,15 +30,5 @@ cc_test(
     deps = [
         ":game_2048",
         "@com_google_googletest//:gtest_main",
-    ],
-)
-
-cc_binary(
-    name = "games_run",
-    srcs = [
-        "main.cpp"
-    ],
-    deps = [
-        ":game_2048",
     ],
 )

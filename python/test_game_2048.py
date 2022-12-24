@@ -1,12 +1,12 @@
 import unittest
 
-import game_2048
+import reinterest
 
 
 class GameTests(unittest.TestCase):
 
     def test_score(self):
-        board = game_2048.GameState2048()
+        board = reinterest.GameState2048()
         print(str(board))
         self.assertLessEqual(board.score(), 0)
 

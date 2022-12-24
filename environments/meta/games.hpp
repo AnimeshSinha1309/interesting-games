@@ -4,9 +4,30 @@
 #include <iostream>
 
 
+using reward_t = double;
+
 class MetaDiscreteAction {
-    int num_actions();
-    MetaDiscreteAction get_action(int index);
+    /**
+     * Get total number of function in the action space
+     * TODO: Make this static
+     * @return the number of actions
+     */
+    virtual int num_actions() = 0;
+    
+    /**
+     * Get the action corresponding to a given index
+     * TODO: Make this static
+     * @param index: index for which we want the action
+     * @return the action corresponding to the given index
+     */
+    virtual MetaDiscreteAction get_action(int index) = 0;
+
+    /**
+     * Get the index corresponding to a given action
+     * TODO: Make this static, take action as parameter
+     * @return the index corresponding to the given action
+     */
+    virtual int get_index() = 0;
 };
 
 template <typename ActionSpace>

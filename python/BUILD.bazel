@@ -1,8 +1,8 @@
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension")
 
 cc_binary(
-  name = "game_2048.so",
-  srcs = ["bindings_game_2048.cpp"],
+  name = "reinterest.so",
+  srcs = ["bindings.cpp"],
   copts = ["-Iexternal/pybind"],
   linkshared = 1,
   linkstatic = 1,
@@ -14,8 +14,8 @@ cc_binary(
 )
 
 py_library(
-  name = "game_2048.bindings",
-  data=[':game_2048.so'],
+  name = "reinterest.bindings",
+  data=[':reinterest.so'],
   imports=['.'],
   visibility = ["//visibility:public"],
 )
@@ -23,7 +23,7 @@ py_library(
 py_test(
   name = "test_game_2048",
   srcs = ["test_game_2048.py"],
-  deps = [":game_2048.bindings"],
+  deps = [":reinterest.bindings"],
   python_version = "PY3",
   legacy_create_init = False,
   timeout = "short",

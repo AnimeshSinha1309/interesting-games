@@ -1,8 +1,8 @@
-#include "game_state.hpp"
-
 #include <cstdlib>
 #include <fmt/core.h>
 #include <stdexcept>
+
+#include "game_state.hpp"
 
 
 template<std::size_t size>

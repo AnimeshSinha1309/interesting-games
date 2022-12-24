@@ -1,0 +1,54 @@
+
+cc_library(
+    name = "memory",
+    hdrs = [
+        "mcts/memory.hpp",
+    ],
+    srcs = [
+        "mcts/memory.cpp",
+    ],
+    deps = [
+        "@//environments:environments",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "test_memory",
+    size = "small",
+    srcs = [
+        "mcts/memory.test.cpp",
+    ],
+    deps = [
+        ":memory",
+        "@//environments:game_2048",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_library(
+    name = "mcts",
+    hdrs = [
+        "mcts/mcts.hpp",
+    ],
+    srcs = [
+        "mcts/mcts.cpp",
+    ],
+    deps = [
+        ":memory",
+        "@//environments:environments",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "test_mcts",
+    size = "small",
+    srcs = [
+        "mcts/mcts.test.cpp",
+    ],
+    deps = [
+        ":mcts",
+        "@com_google_googletest//:gtest_main",
+    ],
+)

@@ -8,7 +8,7 @@
 
 PYBIND11_MAKE_OPAQUE(std::vector<std::vector<int>>);
 
-PYBIND11_MODULE(game_2048, m) {
+PYBIND11_MODULE(reinterest, m) {
     m.doc() = "A simulation environment for the 2048 game with board size 4x4";
     pybind11::class_<GameState2048<4>>(m, "GameState2048")
         .def(pybind11::init<>())
