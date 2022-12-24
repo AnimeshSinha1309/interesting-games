@@ -1,0 +1,23 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Bazel Tests for Interesting Games
+
+on:
+  push:
+    branches:
+      - master
+      - "*"
+      - "*/*"
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest,]
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: bazelbuild/setup-bazelisk@v2
+    - run: bazel test //...
