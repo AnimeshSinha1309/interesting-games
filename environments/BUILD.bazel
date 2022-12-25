@@ -1,12 +1,4 @@
 cc_library(
-    name = "environments",
-    hdrs = [
-        "meta/games.hpp",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-cc_library(
     name = "game_2048",
     hdrs = [
         "game_2048/game_state.hpp",
@@ -15,7 +7,6 @@ cc_library(
         "game_2048/game_state.cpp",
     ],
     deps = [
-        ":environments",
         "@fmt",
     ],
     visibility = ["//visibility:public"],

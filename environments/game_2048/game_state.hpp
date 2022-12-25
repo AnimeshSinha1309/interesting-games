@@ -4,10 +4,9 @@
 #include <array>
 #include <vector>
 
-#include "../meta/games.hpp"
 
-
-class Action2048 {
+template<std::size_t size>
+class GameState2048 {
 public:
     enum class ActionType {
         UP,
@@ -15,13 +14,10 @@ public:
         LEFT,
         RIGHT,
     };
-    ActionType action;
-    Action2048(ActionType action_type) : action{action_type} {}
-};
+    static const int NUM_ACTIONS = 4;
 
-template<std::size_t size>
-class GameState2048 : public MetaGameState<Action2048> {
 protected:
+
     std::array<std::array<int, size>, size> tiles;
     int total_score;
 
@@ -36,7 +32,7 @@ protected:
      * @param move: the direction we should move in
      * @return score increase in this move
      */
-    int push_and_merge(Action2048 move);
+    int push_and_merge(ActionType move);
 
 public:
     /**
@@ -57,7 +53,7 @@ public:
      * @param move: the direction to move in
      * @return score increase in this move
      */
-    int step(Action2048 move);
+    int step(ActionType move);
 
     /**
      * Gets the score of the current game state. The score is defined as the sum of all

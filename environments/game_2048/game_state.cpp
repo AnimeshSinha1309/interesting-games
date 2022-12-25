@@ -64,7 +64,7 @@ int GameState2048<size>::place_new_tile() {
 }
 
 template<std::size_t size>
-int GameState2048<size>::push_and_merge(Action2048 move) {
+int GameState2048<size>::push_and_merge(GameState2048<size>::ActionType move) {
     int total_score = 0;
     for (int i = 0; i < static_cast<int>(size); i++) {
         std::array<int, size> current_file;
@@ -73,17 +73,17 @@ int GameState2048<size>::push_and_merge(Action2048 move) {
         // Compute the pushes and merges in the current file
         for (int j = 0; j < static_cast<int>(size); j++) {
             int current_tile;
-            switch (move.action) {
-                case Action2048::ActionType::UP:
+            switch (move) {
+                case GameState2048<size>::ActionType::UP:
                     current_tile = this->tiles[j][i];
                     break;
-                case Action2048::ActionType::DOWN:
+                case GameState2048<size>::ActionType::DOWN:
                     current_tile = this->tiles[size - 1 - j][i];
                     break;
-                case Action2048::ActionType::LEFT:
+                case GameState2048<size>::ActionType::LEFT:
                     current_tile = this->tiles[i][j];
                     break;
-                case Action2048::ActionType::RIGHT:
+                case GameState2048<size>::ActionType::RIGHT:
                     current_tile = this->tiles[i][size - 1 - j];
                     break;
             }
@@ -104,17 +104,17 @@ int GameState2048<size>::push_and_merge(Action2048 move) {
         }
         // Assign the gathered current file to back to the board
         for (int j = 0; j < static_cast<int>(size); j++) {
-            switch (move.action) {
-                case Action2048::ActionType::UP:
+            switch (move) {
+                case GameState2048<size>::ActionType::UP:
                     this->tiles[j][i] = current_file[j];
                     break;
-                case Action2048::ActionType::DOWN:
+                case GameState2048<size>::ActionType::DOWN:
                     this->tiles[size - 1 - j][i] = current_file[j];
                     break;
-                case Action2048::ActionType::LEFT:
+                case GameState2048<size>::ActionType::LEFT:
                     this->tiles[i][j] = current_file[j];
                     break;
-                case Action2048::ActionType::RIGHT:
+                case GameState2048<size>::ActionType::RIGHT:
                     this->tiles[i][size - 1 - j] = current_file[j];
                     break;
             }
@@ -129,7 +129,7 @@ template<std::size_t size>
 }
 
 template<std::size_t size>
-int GameState2048<size>::step(Action2048 move) {
+int GameState2048<size>::step(GameState2048<size>::ActionType move) {
     int score_added = push_and_merge(move);
     place_new_tile();
     total_score += score_added;

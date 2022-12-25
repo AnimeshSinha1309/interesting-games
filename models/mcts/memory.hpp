@@ -3,33 +3,42 @@
 
 #include <array>
 #include <queue>
+#include <memory>
 
-#include "../../environments/meta/games.hpp"
+using reward_t = double;
 
-template<typename GameStateClass, int num_actions>
+template<typename GameStateClass>
 class SimpleMemory {
-
+public:
+    template<typename StateClass>
     struct MemoryItem {
-        GameStateClass state;
-        reward_t q_value;
-        std::array<int, num_actions> n_values;
+        std::unique_ptr<StateClass> state;
+        reward_t value;
+        std::array<int, StateClass::NUM_ACTIONS> counts;
     };
 
-    std::deque<MemoryItem> data;
-    size_t size;
+protected:
+    std::deque<MemoryItem<GameStateClass>> data;
+    std::size_t size;
 
-    MemoryItem next() {
-        MemoryItem item = data.front();
-        data.pop_front();
-        size -= 1;
-        return item;
-    }
+public:
+    /**
+     * Returns the next experience from the replay buffer
+     * @return the experience item
+     */
+    MemoryItem<GameStateClass> next();
 
-    void store(GameStateClass s, reward_t v, std::array<int, num_actions> n) {
-        MemoryItem item { .state = s, .q_value = v, .n_values = n };
-        size += 1;
-        data.push_back(item);
-    }
+    /**
+     * Stores a single experience in the replay buffer
+     * @param state: the state associated with this experience
+     * @param value: value function of the state
+     * @param counts: visitation counts for each action
+     */
+    void store(
+        std::unique_ptr<GameStateClass> state,
+        reward_t value,
+        std::array<int, GameStateClass::NUM_ACTIONS> counts
+    );
 };
 
 #endif //INTERESTING_GAMES_MEMORY_H

@@ -4,24 +4,22 @@
 #include <array>
 #include <memory>
 
-#include "../../environments/meta/games.hpp"
+using reward_t = double;
 
-template <typename GameStateClass, typename ActionClass, typename MemoryClass>
+template <typename GameStateClass, typename ActionEnum, typename MemoryClass>
 class MonteCarloTreeSearch {
 private:
-    template <int num_actions>
+    template <typename StateClass>
     struct TreeNode {
-        std::unique_ptr<GameStateClass> state;
+        std::unique_ptr<StateClass> state;
         reward_t r_previous;
-        std::array<reward_t, num_actions> q_value;
-        std::array<int, num_actions> n_value;
-        std::weak_ptr<TreeNode> parent;
-        std::array<std::shared_ptr<TreeNode>, num_actions> children;
+        std::array<reward_t, StateClass::NUM_ACTIONS> q_value;
+        std::array<int, StateClass::NUM_ACTIONS> n_value;
+        std::weak_ptr<TreeNode<StateClass>> parent;
+        std::array<std::shared_ptr<TreeNode<StateClass>>, StateClass::NUM_ACTIONS> children;
     };
 
-    using TreeNodePointer = std::shared_ptr<TreeNode<4>>;
-
-    TreeNodePointer root;
+    std::shared_ptr<TreeNode<GameStateClass>> root;
     MemoryClass memory;
 
     /**
@@ -30,7 +28,7 @@ private:
      * upper confidence bound value in each layer.
      * @return a pointer to the selected node
      */
-    TreeNodePointer select();
+    std::shared_ptr<TreeNode<GameStateClass>> select();
 
     /**
      * Performs the EXPAND stage of MCTS
@@ -39,7 +37,7 @@ private:
      * @param node: the node that needs to be expanded
      * @param action: action that we are taking from the given node
      */
-    void expand(TreeNodePointer node, ActionClass action);
+    void expand(std::shared_ptr<TreeNode<GameStateClass>> node, ActionEnum action);
 
     /**
      * Performs the ROLLOUT stage of MCTS
@@ -48,7 +46,7 @@ private:
      * @param node: the node for which we are estimating the rollout value
      * @return the estimated long-term reward (value-function) from the state
      */
-    reward_t rollout(TreeNodePointer node);
+    reward_t rollout(std::shared_ptr<TreeNode<GameStateClass>> node);
 
     /**
      * Performs the BACKUP stage of MCTS
@@ -57,7 +55,7 @@ private:
      * @param node: node we are starting the backup from
      * @param reward: value estimate obtained at the leaf from rollout
      */
-    void backup(TreeNodePointer node, reward_t reward);
+    void backup(std::shared_ptr<TreeNode<GameStateClass>> node, reward_t reward);
 
 public:
     /**
@@ -76,7 +74,7 @@ public:
      * @param n_mcts: number of MCTS iterations to run for
      * @return the best action form the root state
      */
-    [[nodiscard]] ActionClass search(int n_mcts = 1000) noexcept;
+    [[nodiscard]] ActionEnum search(int n_mcts = 1000) noexcept;
 
     /**
      * Changes the root to one that is a child of the current root,
@@ -84,7 +82,7 @@ public:
      * This action should preferrably be the one returned by search.
      * @param action: action taken from the root
      */
-    void next(ActionClass action);
+    void next(ActionEnum action);
 };
 
 #endif //INTERESTING_GAMES_MCTS_H

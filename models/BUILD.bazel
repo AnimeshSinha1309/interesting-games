@@ -8,7 +8,6 @@ cc_library(
         "mcts/memory.cpp",
     ],
     deps = [
-        "@//environments:environments",
     ],
     visibility = ["//visibility:public"],
 )
@@ -36,7 +35,6 @@ cc_library(
     ],
     deps = [
         ":memory",
-        "@//environments:environments",
     ],
     visibility = ["//visibility:public"],
 )
