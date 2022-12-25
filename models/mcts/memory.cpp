@@ -1,9 +1,10 @@
 #include "memory.hpp"
+#include "../../environments/game_2048/game_state.hpp"
 
 template<typename GameStateClass>
 SimpleMemory<GameStateClass>::MemoryItem<GameStateClass>
 SimpleMemory<GameStateClass>::next() {
-    SimpleMemory<GameStateClass>::MemoryItem<GameStateClass> item = data.front();
+    SimpleMemory<GameStateClass>::MemoryItem<GameStateClass> item = std::move(data.front());
     data.pop_front();
     size -= 1;
     return item;
@@ -17,3 +18,5 @@ void SimpleMemory<GameStateClass>::store(
     size += 1;
     data.emplace_back(std::move(state), value, counts);
 }
+
+template class SimpleMemory<GameState2048<4>>;

@@ -28,7 +28,7 @@ private:
      * upper confidence bound value in each layer.
      * @return a pointer to the selected node
      */
-    std::shared_ptr<TreeNode<GameStateClass>> select();
+    auto select() -> std::shared_ptr<TreeNode<GameStateClass>>;
 
     /**
      * Performs the EXPAND stage of MCTS

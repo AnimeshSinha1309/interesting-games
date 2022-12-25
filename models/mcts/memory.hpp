@@ -15,6 +15,11 @@ public:
         std::unique_ptr<StateClass> state;
         reward_t value;
         std::array<int, StateClass::NUM_ACTIONS> counts;
+
+        MemoryItem(
+            std::unique_ptr<StateClass> s,
+            reward_t v,
+            std::array<int, StateClass::NUM_ACTIONS> c) : state(std::move(s)), value(v), counts(c) {}
     };
 
 protected:

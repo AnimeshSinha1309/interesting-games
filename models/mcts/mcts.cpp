@@ -1,8 +1,10 @@
 #include "mcts.hpp"
+#include "memory.hpp"
+#include "../../environments/game_2048/game_state.hpp"
 
 template <typename GameStateClass, typename ActionEnum, typename MemoryClass>
-std::shared_ptr<MonteCarloTreeSearch<GameStateClass, ActionEnum, MemoryClass>::TreeNode<GameStateClass>>
-MonteCarloTreeSearch<GameStateClass, ActionEnum, MemoryClass>::select() {
+auto
+MonteCarloTreeSearch<GameStateClass, ActionEnum, MemoryClass>::select() -> std::shared_ptr<TreeNode<GameStateClass>> {
     return root;
 }
 
@@ -45,3 +47,5 @@ void
 MonteCarloTreeSearch<GameStateClass, ActionEnum, MemoryClass>::next(
     ActionEnum action) {
 }
+
+template class MonteCarloTreeSearch<GameState2048<4>, GameState2048<4>::ActionType, SimpleMemory<GameState2048<4>>>;
