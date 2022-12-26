@@ -1,16 +1,15 @@
-
 cc_library(
     name = "memory",
-    hdrs = [
-        "mcts/memory.hpp",
-    ],
     srcs = [
         "mcts/memory.cpp",
     ],
-    deps = [
-        "@//environments:game_2048"
+    hdrs = [
+        "mcts/memory.hpp",
     ],
     visibility = ["//visibility:public"],
+    deps = [
+        "@//environments:game_2048",
+    ],
 )
 
 cc_test(
@@ -28,17 +27,17 @@ cc_test(
 
 cc_library(
     name = "mcts",
-    hdrs = [
-        "mcts/mcts.hpp",
-    ],
     srcs = [
         "mcts/mcts.cpp",
     ],
+    hdrs = [
+        "mcts/mcts.hpp",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":memory",
         "@//environments:game_2048",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_test(

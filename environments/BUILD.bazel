@@ -1,15 +1,15 @@
 cc_library(
     name = "game_2048",
-    hdrs = [
-        "game_2048/game_state.hpp",
-    ],
     srcs = [
         "game_2048/game_state.cpp",
     ],
+    hdrs = [
+        "game_2048/game_state.hpp",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         "@fmt",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_test(

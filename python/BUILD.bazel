@@ -1,30 +1,30 @@
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension")
 
 cc_binary(
-  name = "reinterest.so",
-  srcs = ["bindings.cpp"],
-  copts = ["-Iexternal/pybind"],
-  linkshared = 1,
-  linkstatic = 1,
-  deps = [
-    "@pybind11//:pybind11_embed",
-    "@//environments:game_2048"
-  ],
-  visibility = ["//visibility:public"],
+    name = "reinterest.so",
+    srcs = ["bindings.cpp"],
+    copts = ["-Iexternal/pybind"],
+    linkshared = 1,
+    linkstatic = 1,
+    visibility = ["//visibility:public"],
+    deps = [
+        "@//environments:game_2048",
+        "@pybind11//:pybind11_embed",
+    ],
 )
 
 py_library(
-  name = "reinterest.bindings",
-  data=[':reinterest.so'],
-  imports=['.'],
-  visibility = ["//visibility:public"],
+    name = "reinterest.bindings",
+    data = [":reinterest.so"],
+    imports = ["."],
+    visibility = ["//visibility:public"],
 )
 
 py_test(
-  name = "test_game_2048",
-  srcs = ["test_game_2048.py"],
-  deps = [":reinterest.bindings"],
-  python_version = "PY3",
-  legacy_create_init = False,
-  timeout = "short",
+    name = "test_game_2048",
+    timeout = "short",
+    srcs = ["test_game_2048.py"],
+    legacy_create_init = False,
+    python_version = "PY3",
+    deps = [":reinterest.bindings"],
 )

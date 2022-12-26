@@ -4,7 +4,6 @@ import reinterest
 
 
 class GameTests(unittest.TestCase):
-
     def test_score(self):
         board = reinterest.GameState2048()
         print(str(board))
